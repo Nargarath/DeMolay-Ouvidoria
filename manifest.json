@@ -1,0 +1,15 @@
+{
+    "name": "Ouvidoria DeMolay/RN",
+    "short_name": "Ouvidoria",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#228B22",
+    "description": "Uma aplicação para receber feedbacks dos demolays do RN",
+    "icons": [],
+    "lang": "pt-BR",
+    "related_applications": [
+        {
+            "platform": "web"
+        }
+    ]
+}
