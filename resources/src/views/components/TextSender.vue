@@ -1,12 +1,3 @@
-<style>
-.notActiveMural{
-    background: #f3f3f7 !important;
-    border-color: white;
-    border: 1px solid;
-    color: white !important;
-}
-</style>
-
 <template>
     <div class="position-relative">
         <section class="section section-shaped my-0 overflow-hidden" id="mural">
