@@ -17,11 +17,13 @@ class Feedback extends CI_Controller {
     }
     public function add(){
         $request = $this->input->post();
-
-		$this->form_validation->set_data($request);
+        $anonymous = boolval($request['anonymous']);
+        $this->form_validation->set_data($request);
+        if(!$anonymous){
+            $this->form_validation->set_rules('chapter','capitulo' ,'required');
+        }
 		$this->form_validation->set_rules('feedbackType','tipo de feedback' ,'required');
         $this->form_validation->set_rules('text','texto de feeback' ,'required');
-        $this->form_validation->set_rules('chapter','capitulo' ,'required');
         $this->form_validation->set_error_delimiters('', '');
         
         if ($this->form_validation->run() === TRUE)
@@ -29,7 +31,7 @@ class Feedback extends CI_Controller {
             $feedback = new Feedbacks();
             $feedback->feedbackType_id = $request['feedbackType'];
             $feedback->text = $request['text'];
-            $feedback->chapter_id = $request['chapter'];
+            $feedback->chapter_id = (!$anonymous)?$request['chapter']:18;
             $feedback->approved = 0;
             $feedback->save();
             
@@ -47,7 +49,7 @@ class Feedback extends CI_Controller {
         }else{
             $data['success'] = false;
 			$data['errors'] = $this->form_validation->error_array();
-            $data['message'] = "Preencha todos os campos";
+            $data['message'] = "Preencha todos os campos obrigatórios";
             echo(json_encode($data));
         }
     }

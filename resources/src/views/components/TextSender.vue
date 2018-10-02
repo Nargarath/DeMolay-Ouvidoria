@@ -326,24 +326,24 @@
                             </div>
                             <div class="btn-wrapper mb-3" >
                                 <base-button tag="a"
-                                            :class="['mb-3', 'mb-sm-0',this.data.feedbackType==='0'&&this.data.feedbackType!==''?'active':'']"
+                                            :class="['mb-3', 'mb-sm-0',this.data.feedbackType===0&&this.data.feedbackType!==''?'active':'']"
                                             type="white"
                                             icon="fa fa-thumbs-up"
-                                            @click="changeType('0')">
+                                            @click="changeType(0)">
                                     Elogio
                                 </base-button>
                                 <base-button tag="a"
-                                            :class="['mb-3', 'mb-sm-0',this.data.feedbackType==='1'&&this.data.feedbackType!==''?'active':'']"
+                                            :class="['mb-3', 'mb-sm-0',this.data.feedbackType===1&&this.data.feedbackType!==''?'active':'']"
                                             type="white"
                                             icon="ni ni-bulb-61"
-                                            @click="changeType('1')">
+                                            @click="changeType(1)">
                                     Sugestão
                                 </base-button>
                                 <base-button tag="a"
-                                            :class="['mb-3', 'mb-sm-0',this.data.feedbackType==='2'&&this.data.feedbackType!==''?'active':'']"
+                                            :class="['mb-3', 'mb-sm-0',this.data.feedbackType===2&&this.data.feedbackType!==''?'active':'']"
                                             type="white"
                                             icon="fa fa-thumbs-down"
-                                            @click="changeType('2')">
+                                            @click="changeType(2)">
                                     Crítica
                                 </base-button>
                                 <!--
@@ -356,6 +356,16 @@
                                 </base-button>-->
                             </div>
                             <div class="form-group">
+                                <div class="custom-control custom-radio custom-control-inline" @click="data.anonymous=1">
+                                    <input type="radio" id="anonimo"  v-model="data.anonymous" value="1" class="custom-control-input">
+                                    <label class="custom-control-label" for="feedback-anonimo">Feedback Anônimo</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline" @click="data.anonymous=0">
+                                    <input type="radio" id="identificarcap" v-model="data.anonymous" value="0" class="custom-control-input">
+                                    <label class="custom-control-label" for="identifica-cap">Identificar meu Capítulo</label>
+                                </div>
+                            </div>
+                            <div class="form-group" v-show="data.anonymous==0">
                                 <select class="form-control" v-model="data.chapters">
                                     <option value="" disabled>Escolha seu capítulo</option>
                                     <option v-bind:value="chapter.id" v-for="(chapter,index) in chapters" v-bind:key="index">{{chapter.name}}</option>
@@ -397,7 +407,8 @@ export default {
             data:{
                 feedbackType:'',
                 text:'',
-                chapters:''
+                chapters:'',
+                anonymous:0
             },
             success:'',
             errors:{
@@ -469,6 +480,7 @@ export default {
             data.append('feedbackType', this.data.feedbackType+1);
             data.append('text', this.data.text);
             data.append('chapter', this.data.chapters);
+            data.append('anonymous', this.data.anonymous);
             axios.post('feedback/add',data)
                 .then((res)=>{
                     this.success = res.data.success;
