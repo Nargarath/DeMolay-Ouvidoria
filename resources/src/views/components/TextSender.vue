@@ -366,6 +366,9 @@
                                 </div>
                             </div>
                             <div class="form-group" v-show="data.anonymous==0">
+                                <base-input v-model="data.people_name" alternative placeholder="Seu nome"></base-input>
+                            </div>
+                            <div class="form-group" v-show="data.anonymous==0">
                                 <select class="form-control" v-model="data.chapters">
                                     <option value="" disabled>Escolha seu capítulo</option>
                                     <option v-bind:value="chapter.id" v-for="(chapter,index) in chapters" v-bind:key="index">{{chapter.name}}</option>
@@ -408,7 +411,8 @@ export default {
                 feedbackType:'',
                 text:'',
                 chapters:'',
-                anonymous:0
+                anonymous:0,
+                people_name:''
             },
             success:'',
             errors:{
@@ -481,6 +485,7 @@ export default {
             data.append('text', this.data.text);
             data.append('chapter', this.data.chapters);
             data.append('anonymous', this.data.anonymous);
+            data.append('people_name', this.data.people_name);
             axios.post('feedback/add',data)
                 .then((res)=>{
                     this.success = res.data.success;

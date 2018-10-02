@@ -21,6 +21,7 @@ class Feedback extends CI_Controller {
         $this->form_validation->set_data($request);
         if(!$anonymous){
             $this->form_validation->set_rules('chapter','capitulo' ,'required');
+            $this->form_validation->set_rules('people_name','seu nome' ,'required');
         }
 		$this->form_validation->set_rules('feedbackType','tipo de feedback' ,'required');
         $this->form_validation->set_rules('text','texto de feeback' ,'required');
@@ -32,6 +33,7 @@ class Feedback extends CI_Controller {
             $feedback->feedbackType_id = $request['feedbackType'];
             $feedback->text = $request['text'];
             $feedback->chapter_id = (!$anonymous)?$request['chapter']:18;
+            $feedback->people_name = (!$anonymous)?$request['people_name']:null;
             $feedback->approved = 0;
             $feedback->save();
             

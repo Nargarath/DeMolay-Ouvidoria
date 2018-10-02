@@ -9,6 +9,7 @@ class Feedbacks extends Eloquent {
     protected $fillable = [
         'text',
         'approved',
+        'people_name',
         'feedbackType_id',
         'chapter_id'
     ];
